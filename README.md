@@ -1,2 +1,33 @@
-# php-gateway-client
-Gateway API Client for an RFI gateway in PHP
+# php-gateway-client for Rumbleship Financial (RFi)
+Rumbleship Finanacial payment gateway api client.
+
+# Setup
+## Environment Composer + PHP
+Package Management and linting. 
+Composer is to PHP as NPM is to Node.  `composer.json` is to PHP as `package.json` is to Node.
+
+    brew tap homebrew/php
+    brew install php56
+    brew install composer
+
+## Dependencies
+
+Now with composer installed you can run composer to install the package dependencies:
+
+    composer install
+
+## Test
+
+    composer test 
+    
+## Lint
+   
+    composer lint
+    
+    
+
+
+
+
+
+
