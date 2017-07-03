@@ -1,5 +1,4 @@
-# php-gateway-client for Rumbleship Financial (RFi)
-Rumbleship Finanacial payment gateway api client.
+Rumbleship Financial (RFi) php-gateway-client
 
 # Setup
 ## Environment Composer + PHP
