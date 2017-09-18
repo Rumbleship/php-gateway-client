@@ -8,6 +8,9 @@ Composer is to PHP as NPM is to Node.  `composer.json` is to PHP as `package.jso
     brew tap homebrew/php
     brew install php56
     brew install composer
+    
+### PHP version Management? 
+Personally I'm trying out [php-versiion](https://github.com/wilmoore/php-version) for now. 
 
 ## Dependencies
 
