@@ -1,0 +1,23 @@
+{
+    "name": "rumbleship/php-gateway-client",
+    "type": "library",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Alex Lockwood",
+            "email": "alex.lockwood@gmail.com"
+        }
+    ],
+    "scripts": {
+      "test": "phpunit --bootstrap vendor/autoload.php tests"
+    },
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
+    },
+    "minimum-stability": "beta",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {"Rumbleship\\": "src/"}
+    }
+}
