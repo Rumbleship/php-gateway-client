@@ -1,4 +1,5 @@
 <?php
+
 namespace Rumbleship;
 
 class Hello {
@@ -11,4 +12,3 @@ class Hello {
   }
 
 }
-?>

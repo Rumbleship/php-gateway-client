@@ -1,7 +1,8 @@
 {
     "name": "rumbleship/php-gateway-client",
+    "description": "Api Client Library for Rumbleship Financial",
     "type": "library",
-    "license": "GPL",
+    "license": "GPL-3.0",
     "authors": [
         {
             "name": "Alex Lockwood",
@@ -11,13 +12,18 @@
     "scripts": {
       "test": "phpunit --bootstrap vendor/autoload.php tests"
     },
-    "require": {},
+    "require": {
+      "rmccue/requests": "^1.0"
+    },
     "require-dev": {
         "phpunit/phpunit": "^5.7"
     },
     "minimum-stability": "beta",
     "prefer-stable": true,
     "autoload": {
-        "psr-4": {"Rumbleship\\": "src/"}
+        "psr-4": {
+          "Rumbleship\\": "src/" ,
+         "Rumbleship\\Test\\": "tests/"
+        }
     }
 }
