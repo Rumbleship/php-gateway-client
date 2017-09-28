@@ -1,7 +1,10 @@
 <?php
 namespace Rumbleship\Test;
 
-class MockTransport implements Requests_Transport {
+/**
+ * class to mock transports, copied from tests of the rmccue/requests library
+ */
+class MockTransport implements \Requests_Transport {
 	public $code = 200;
 	public $chunked = false;
 	public $body = 'Test Body';
@@ -85,5 +88,18 @@ class MockTransport implements Requests_Transport {
 	public static function test() {
 		return true;
 	}
+}
+
+class RequestToBodyMockTransport extends MockTransport {
+  public function request($url, $headers = array(), $data = array(), $options = array()) {
+    $body_data = array(
+      'headers'=> $headers,
+      'url'=> $url,
+      'request_payload'=> $data,
+      'options'=> $options
+    );
+    $this->body = json_encode($body_data);
+    return parent::request($url, $headers = array(), $data = array(), $options = array());
+  }
 }
 
