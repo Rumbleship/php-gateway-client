@@ -61,7 +61,7 @@ class ApiTest extends TestCase {
   /**
    * When a jwt is set, a request will include the authorization
    */
-  function testAuthorizationForAllRequestTypes()
+  function testSetJwtUpdatesAuthorizationHeadersForRequests()
   {
     $transport = new RequestToBodyMockTransport();
     $api = new Api(self::HOST, array('transport' => $transport));
@@ -69,6 +69,31 @@ class ApiTest extends TestCase {
     $resp = $api->get('/');
     $authorized_with_token = $resp->body['headers']['Authorization'];
     $this->assertEquals($authorized_with_token, self::JWT);
+  }
+
+  /**
+   * When a jwt is set, authorized{Buyer|sUpplier|Claims} properties are set
+   */
+  function testSetJwtShouldSetAuthorizedPropertiesThenClearJwtShouldClearThem()
+  {
+    $claims = array(
+      'u'=> 'userhashid',
+      'b' => 'buyerhashid',
+      's' => 'supplierhashid'
+    );
+    $claims_string = base64_encode(json_encode($claims));
+    $claims_jwt = "bla.$claims_string.validatehashjwtpart";
+    $api = new Api(self::HOST);
+    $api->setJwt($claims_jwt);
+    $this->assertEquals($api->getJwt(), $claims_jwt);
+    $this->assertEquals($api->getAuthorizedClaims(), $claims);
+    $this->assertEquals($api->getAuthorizedBuyer(), $claims['b']);
+    $this->assertEquals($api->getAuthorizedSupplier(), $claims['s']);
+    $api->unsetJwt();
+    $this->assertEquals($api->getJwt(), '');
+    $this->assertEquals($api->getAuthorizedClaims(), '');
+    $this->assertEquals($api->getAuthorizedBuyer(), '');
+    $this->assertEquals($api->getAuthorizedSupplier(), '');
   }
 
   function testPostIsPost()
