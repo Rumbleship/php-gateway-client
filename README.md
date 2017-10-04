@@ -12,6 +12,7 @@ php version management.  Command line commands for getting this done:
     brew tap homebrew/homebrew-php
     brew install php56
     brew unlink php56
+    brew install php-version
     source $(brew --prefix php-version)/php-version.sh && php-version 5
 
 To use the `php-version` command going forward, copy the last line into your `.zshrc` or `.bashrc`;
