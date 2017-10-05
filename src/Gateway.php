@@ -1,19 +1,16 @@
 <?php
-
 namespace Rumbleship;
 
-class Gateway {
-  protected $name;
-  public function __construct ($options = array()) {
-    $this->name = 'Rumbleship Gateway';
+use Rumbleship\Api;
 
-    if (!isset($options['apihost']))
-      $options["apihost"] = 'api.staging-rumbleship.com';
-  }
 
-  public function words() {
-    return 'Hello ' . $this->name . '.';
-  }
+class Gateway extends Api {
+    protected $name;
 
+    public function __construct ($request_options = array())
+    {
+        $this->name = 'Rumbleship Gateway';
+        $this->description = 'Endpoint SDK for using the gateway';
+    }
 }
 
