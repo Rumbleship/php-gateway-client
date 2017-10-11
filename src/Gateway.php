@@ -22,11 +22,11 @@ class Gateway extends Api {
      *
      * @return boolean
      */
-    public function ready() {
-        return
-            $this->authorizedSupplier &&
-            $this->authroizedBuyer &&
-            $this->jwt && true;
+    public function ready()
+    {
+        return ($this->authorizedSupplier &&
+            $this->authorizedBuyer &&
+            $this->jwt && true ?: false);
     }
 
 
@@ -38,7 +38,7 @@ class Gateway extends Api {
     {
         $b = $this->requireBuyer();
         $s = $this->requireSupplier();
-        return $this->get("buyers/$b/suppliers/$s");
+        return $this->get("v1/buyers/$b/suppliers/$s");
     }
 
     /**
@@ -48,7 +48,7 @@ class Gateway extends Api {
     {
         $b = $this->requireBuyer();
         $s = $this->requireSupplier();
-        return $this->get("buyers/$b/suppliers/$s/terms-choices");
+        return $this->get("v1/buyers/$b/suppliers/$s/terms-choices");
     }
 
     /**
@@ -58,7 +58,7 @@ class Gateway extends Api {
     {
         $b = $this->requireBuyer();
         $s = $this->requireSupplier();
-        return $this->post("buyers/$b/suppliers/$s/purchase-orders", $data);
+        return $this->post("v1/buyers/$b/suppliers/$s/purchase-orders", $data);
     }
 
     /**
@@ -66,11 +66,11 @@ class Gateway extends Api {
      */
     public function confirmPurchaseOrder($hashid, $data)
     {
-        return $this->post("purchase-orders/$hashid/confirm", $data);
+        return $this->post("v1/purchase-orders/$hashid/confirm", $data);
     }
 
 
-    private function requiredSupplier()
+    private function requireSupplier()
     {
         if ( $this->authorizedSupplier )
             return $this->authorizedSupplier;
@@ -78,7 +78,7 @@ class Gateway extends Api {
             throw new Exception('Authorized Supplier is required');
 
     }
-    private function requiredBuyer()
+    private function requireBuyer()
     {
         if ( $this->authorizedBuyer )
             return $this->authorizedBuyer;
