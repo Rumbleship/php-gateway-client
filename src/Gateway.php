@@ -24,9 +24,7 @@ class Gateway extends Api {
      */
     public function ready()
     {
-        return ($this->authorizedSupplier &&
-            $this->authorizedBuyer &&
-            $this->jwt && true ?: false);
+        return ($this->authorizedSupplier && $this->authorizedBuyer && $this->jwt);
     }
 
 
