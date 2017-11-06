@@ -23,7 +23,7 @@
     "autoload": {
         "psr-4": {
           "Rumbleship\\": "src/" ,
-         "Rumbleship\\Test\\": "tests/"
+          "Rumbleship\\Test\\": "tests/"
         }
     }
 }
