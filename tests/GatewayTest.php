@@ -85,7 +85,7 @@ class GatewayTest extends TestCase {
         $url_expected = "https://" . self::HOST . "/v1/buyers/$b/suppliers/$s/purchase-orders";
         $this->assertEquals($resp->body['url'], $url_expected);
         $this->assertEquals($resp->body['options']['type'], 'POST');
-        $this->assertEquals($resp->request_payload['value'], $data['value']);
+        $this->assertEquals($resp->body['request_payload'], $data);
     }
 
     /**
@@ -111,7 +111,33 @@ class GatewayTest extends TestCase {
         $url_expected = "https://" . self::HOST . "/v1/purchase-orders/$hashid/confirm";
         $this->assertEquals($resp->body['url'], $url_expected);
         $this->assertEquals($resp->body['options']['type'], 'POST');
-        $this->assertEquals($resp->request_payload['value'], $data['value']);
+        $this->assertEquals($resp->body['request_payload'], $data);
+    }
+
+    /**
+     * @group gateway
+     * request has authorization,
+     * is POST
+     * is to the correct url
+     * uses the passed in hashid
+     * posts the data in the request body
+     */
+    function testCreateShipment()
+    {
+        $transport = new RequestToBodyMockTransport();
+        $gateway = new Gateway(self::HOST, array('transport' => $transport));
+        $gateway->setJwt($this->jwt);
+        $data = array( 'key' => 'createShipment' );
+        $hashid = 'po_test';
+        $resp = $gateway->createShipment($hashid, $data);
+        $authorized_with_token = $resp->body['headers']['Authorization'];
+        $this->assertEquals($authorized_with_token, $this->jwt);
+        $b = $this->claims['b'];
+        $s = $this->claims['s'];
+        $url_expected = "https://" . self::HOST . "/v1/purchase-orders/$hashid/shipments";
+        $this->assertEquals($resp->body['url'], $url_expected);
+        $this->assertEquals($resp->body['options']['type'], 'POST');
+        $this->assertEquals($resp->body['request_payload'], $data);
     }
 
     /**
@@ -135,4 +161,3 @@ class GatewayTest extends TestCase {
         $this->assertEquals($resp->body['options']['type'], 'GET');
     }
 }
-

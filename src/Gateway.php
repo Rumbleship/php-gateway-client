@@ -67,6 +67,13 @@ class Gateway extends Api {
         return $this->post("v1/purchase-orders/$hashid/confirm", $data);
     }
 
+    /**
+     * Create the initial shipment
+     */
+    public function createShipment($hashid, $data)
+    {
+        return $this->post("v1/purchase-orders/$hashid/shipments", $data);
+    }
 
     private function requireSupplier()
     {
@@ -86,4 +93,3 @@ class Gateway extends Api {
     }
 
 }
-
