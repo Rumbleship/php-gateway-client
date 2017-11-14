@@ -119,25 +119,24 @@ class GatewayTest extends TestCase {
      * request has authorization,
      * is POST
      * is to the correct url
-     * uses the passed in hashid
-     * posts the data in the request body
+     * uses the passed in po hashid
+     * posts the po in the request body
      */
     function testCreateShipment()
     {
         $transport = new RequestToBodyMockTransport();
         $gateway = new Gateway(self::HOST, array('transport' => $transport));
         $gateway->setJwt($this->jwt);
-        $data = array( 'key' => 'createShipment' );
-        $hashid = 'po_test';
-        $resp = $gateway->createShipment($hashid, $data);
+        $po = array( 'hashid' => 'po_test', 'shipping_data' => 'ups', 'confirmed' => true );
+        $resp = $gateway->createShipment($po);
         $authorized_with_token = $resp->body['headers']['Authorization'];
         $this->assertEquals($authorized_with_token, $this->jwt);
         $b = $this->claims['b'];
         $s = $this->claims['s'];
-        $url_expected = "https://" . self::HOST . "/v1/purchase-orders/$hashid/shipments";
+        $url_expected = 'https://' . self::HOST . '/v1/purchase-orders/' . $po['hashid'] . '/shipments';
         $this->assertEquals($resp->body['url'], $url_expected);
         $this->assertEquals($resp->body['options']['type'], 'POST');
-        $this->assertEquals($resp->body['request_payload'], $data);
+        $this->assertEquals($resp->body['request_payload'], $po);
     }
 
     /**
