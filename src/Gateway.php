@@ -2,6 +2,7 @@
 namespace Rumbleship;
 
 use Rumbleship\Api;
+use Exception;
 
 
 class Gateway extends Api {
@@ -70,11 +71,8 @@ class Gateway extends Api {
     /**
      * Create the initial shipment
      */
-    public function createShipment( $po ) {
-      if ( $po['confirmed'] ) {
-        return $this->post( 'v1/purchase-orders/' . $po['hashid'] . '/shipments', $po );
-      }
-      throw new Exception('Purchase order must be confirmed');
+    public function createShipment( $hashid, $data ) {
+      return $this->post( "v1/purchase-orders/$hashid/shipments", $data );
     }
 
     private function requireSupplier()
