@@ -15,8 +15,8 @@ class Api {
     protected $authorizedBuyer = '';
     protected $authorizedSupplier = '';
     protected $authorizedClaims = '';
-    protected $protocol = 'https://';
     protected $pathPrefix = '';
+    public $protocol = 'https://';
 
     /**
      * @param {string} $host
@@ -131,5 +131,3 @@ class Api {
     }
 
 }
-
-
