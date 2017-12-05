@@ -7,15 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 ### Added
-  * createShipment()
 ### Changed
-  * Allow protocol to be set
 ### Deprecated
 ### Removed
 ### Fixed
+### Security
+
+## [1.1.0] -- 2017-12-05
+
+### Added
+  * createShipment()
+### Changed
+  * Allow protocol to be set
+### Fixed
   * Handle PHP errors appropriately
   * Updated assertion in testCreatePurchaseOrder()
-### Security
 
 ## [1.0.0] -- 2017-11-06
 
