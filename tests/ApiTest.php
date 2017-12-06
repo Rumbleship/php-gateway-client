@@ -19,6 +19,27 @@ class ApiTest extends TestCase {
     }
 
     /**
+     * Encode nested array-like payload values as JSON
+     */
+    function testNestedJsonEncode() {
+      $transport = new RequestToBodyMockTransport();
+      $api = new Api( self::HOST, array( 'transport' => $transport ) );
+      $data_good = [
+        'string' => 'string',
+        'array' => ['string',1,2,3],
+        'obj1' => new \stdClass,
+        'obj2' => (object)['string',1,2,3]
+      ];
+      $resp = $api->post( '/', $data_good );
+
+      foreach ( $resp->body['request_payload'] as $key => $val ) {
+        if ( is_array( $val ) || is_object( $val ) ) {
+          $this->assertEquals( $val, json_encode( $data_good[$key] ) );
+        }
+      }
+    }
+
+    /**
      * Use the actual default transport and talk to an external url, our staging site
      */
     function testStagingUrl()
@@ -162,4 +183,3 @@ class ApiTest extends TestCase {
         $this->assertEquals($resp->body['options']['type'], 'DELETE');
     }
 }
-

@@ -30,8 +30,21 @@ class Api {
         $this->requestOptions = $request_options;
         $this->headers['Accept'] =  'application/json';
 
-        /* hook up json decoding of body */
+
         $hooks = new \Requests_Hooks();
+
+        /* Encode nested array-like payload values as JSON */
+        $hooks->register( 'requests.before_request', function ( &$url, &$headers, &$data, &$type, &$options ) {
+          if ( is_array( $data ) || is_object( $data ) ) {
+            foreach ( $data as $key => $val ) {
+              if ( is_array( $val ) || is_object( $val ) ) {
+                $data[$key] = json_encode( $val );
+              }
+            }
+          }
+        });
+
+        /* hook up json decoding of body */
         $hooks->register('requests.after_request', function ($resp) { $resp->body = json_decode($resp->body, true);});
         $this->requestOptions['hooks'] = $hooks;
     }
