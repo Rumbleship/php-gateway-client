@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed
 ### Fixed
+  * Appropriately test change introduced in 1.1.1
 ### Security
 
 ## [1.1.1] -- 2017-12-06

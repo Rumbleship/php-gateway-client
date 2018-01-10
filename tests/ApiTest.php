@@ -24,18 +24,15 @@ class ApiTest extends TestCase {
     function testNestedJsonEncode() {
       $transport = new RequestToBodyMockTransport();
       $api = new Api( self::HOST, array( 'transport' => $transport ) );
-      $data_good = [
-        'string' => 'string',
-        'array' => ['string',1,2,3],
-        'obj1' => new \stdClass,
-        'obj2' => (object)['string',1,2,3]
+      $data_arr = [
+        'arr' => ['str', 1, 2, 3, (object)[4, 5, 'str'], new \stdClass],
+        'obj' => (object)['str', 1, 2, 3, (object)[4, 5, 'str'], new \stdClass],
+        'obj2' => new \stdClass,
       ];
-      $resp = $api->post( '/', $data_good );
-
+      $resp = $api->post( '/', $data_arr );
       foreach ( $resp->body['request_payload'] as $key => $val ) {
-        if ( is_array( $val ) || is_object( $val ) ) {
-          $this->assertEquals( $val, json_encode( $data_good[$key] ) );
-        }
+        $this->assertEquals( gettype( $val ), 'string' );
+        $this->assertEquals( json_decode( $val ), $data_arr[$key] );
       }
     }
 
