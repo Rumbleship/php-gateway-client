@@ -160,4 +160,18 @@ class GatewayTest extends TestCase {
         $this->assertEquals($resp->body['url'], $url_expected);
         $this->assertEquals($resp->body['options']['type'], 'GET');
     }
+
+    /**
+    * @group current
+    */
+    function testGetFrontendConfig()
+    {
+        $transport = new RequestToBodyMockTransport();
+        $gateway = new Gateway(self::HOST, array('transport' => $transport));
+        $token = "secrettoken";
+        $resp = $gateway->getFrontendConfig($token);
+        $url_expected = "https://" . self::HOST . "/v1/config?id_token=$token";
+        $this->assertEquals($resp->body['url'], $url_expected);
+        $this->assertEquals($resp->body['options']['type'], 'GET');
+    }
 }

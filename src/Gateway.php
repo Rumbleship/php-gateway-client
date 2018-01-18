@@ -28,6 +28,16 @@ class Gateway extends Api {
         return ($this->authorizedSupplier && $this->authorizedBuyer && $this->jwt);
     }
 
+    /**
+     * method to return data for front end analytics configuration
+     * @return array
+    */
+    public function getFrontendConfig($token)
+    {
+        if( ! $token )
+            throw new Exception('$token parameter is required');
+        return $this->get("v1/config?id_token=$token");
+    }
 
     /**
      *  Get a buyer supplier relationship based on authorized buyer supplier
