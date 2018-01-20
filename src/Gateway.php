@@ -32,7 +32,7 @@ class Gateway extends Api {
      * method to return data for front end analytics configuration
      * @return array
     */
-    public function getFrontendConfig($token)
+    public function getConfig($token)
     {
         if( ! $token )
             throw new Exception('$token parameter is required');
