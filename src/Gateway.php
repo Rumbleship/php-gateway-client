@@ -28,6 +28,16 @@ class Gateway extends Api {
         return ($this->authorizedSupplier && $this->authorizedBuyer && $this->jwt);
     }
 
+    /**
+     * method to return data for front end analytics configuration
+     * @return array
+    */
+    public function getConfig($token)
+    {
+        if( ! $token )
+            throw new Exception('$token parameter is required');
+        return $this->get("v1/config?id_token=$token");
+    }
 
     /**
      *  Get a buyer supplier relationship based on authorized buyer supplier
@@ -62,6 +72,7 @@ class Gateway extends Api {
 
     /**
      * Confirm the checkout/payment agreement of a purchase order
+     * and create a shipment containing all line items
      */
     public function confirmPurchaseOrder($hashid, $data)
     {
@@ -69,10 +80,19 @@ class Gateway extends Api {
     }
 
     /**
+     * Confirm the checkout/payment agreement of a purchase order
+     * and do not create a shipment
+     */
+    public function confirmForShipment($hashid, $data)
+    {
+        return $this->post("v1/purchase-orders/$hashid/confirm-for-shipment", $data);
+    }
+
+    /**
      * Create the initial shipment
      */
-    public function createShipment( $hashid, $data ) {
-      return $this->post( "v1/purchase-orders/$hashid/shipments", $data );
+    public function createShipment($hashid, $data) {
+      return $this->post("v1/purchase-orders/$hashid/shipments", $data);
     }
 
     private function requireSupplier()
