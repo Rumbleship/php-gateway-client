@@ -7,13 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 ### Added
-  * confirmForShipment()
 ### Changed
 ### Deprecated
 ### Removed
 ### Fixed
-  * Appropriately test change introduced in 1.1.1
 ### Security
+
+## [1.2.0] -- 2018-01-22
+
+### Added
+  * confirmForShipment()
+  * getConfig()
+### Fixed
+  * Appropriately test change introduced in 1.1.1
 
 ## [1.1.1] -- 2017-12-06
 
