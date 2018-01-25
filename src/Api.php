@@ -106,7 +106,7 @@ class Api {
         if (!is_array($credentials))
             throw new Exception('Login requires first param to be an Associative Array');
 
-        $resp =  $this->post('/login', $credentials);
+        $resp =  $this->post('v1/login', $credentials);
         $jwt = $resp->headers['authorization'];
         $this->setJwt($jwt);
         return $resp;
