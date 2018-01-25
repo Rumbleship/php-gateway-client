@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed
 ### Fixed
+  * Correctly decode JWT claims
 ### Security
 
 ## [1.2.0] -- 2018-01-22
