@@ -59,9 +59,28 @@ class ApiTest extends TestCase {
     }
 
     /**
-     * Login with credentials should set the $jwt
+     * Login posts to correct endpoint
      */
     function testLogin()
+    {
+        $transport = new RequestToBodyMockTransport();
+        $api = new Api(self::HOST, array('transport' => $transport));
+        $credentials = array(
+            'id_token' => 'mylongidtokenasdfasdfasdf',
+            'email' => 'test@rumbleship.com'
+        );
+        $resp = $api->login($credentials);
+        $url_expected = "https://" . self::HOST . "/v1/login";
+        $this->assertEquals($resp->body['url'], $url_expected);
+        $this->assertEquals($resp->body['options']['type'], 'POST');
+        $this->assertEquals($resp->body['request_payload']['id_token'], $credentials['id_token']);
+        $this->assertEquals($resp->body['request_payload']['email'], $credentials['email']);
+    }
+
+    /**
+     * Login with credentials should set the $jwt
+     */
+    function testLoginSetsJWT()
     {
         // setup our mock response
         $transport = new MockTransport();
