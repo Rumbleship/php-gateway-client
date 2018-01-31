@@ -62,7 +62,7 @@ class Api {
             $jwt_exploded = explode('.', $jwt);
             if (isset($jwt_exploded[1])){
                 $raw_claims = explode('.', $jwt)[1];
-                $jwt_claims = json_decode(base64_decode($raw_claims), true);
+                $jwt_claims = json_decode(base64_decode(strtr($raw_claims, '-_', '+/')), true);
                 $this->authorizedClaims = $jwt_claims;
                 if(isset($jwt_claims['b'])){
                     $this->authorizedBuyer = $jwt_claims['b'];
