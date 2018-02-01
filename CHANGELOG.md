@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 ### Added
+  * login() defined on Gateway to allow retrieval of API-defined copy
 ### Changed
 ### Deprecated
 ### Removed
