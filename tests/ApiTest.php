@@ -95,6 +95,7 @@ class ApiTest extends TestCase {
         $this->assertEquals($api->getJwt(), $jwt);
     }
 
+
     /**
      * When a jwt is set, a request will include the authorization
      */
