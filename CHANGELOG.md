@@ -4,15 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.3.0] -- 2018-01-31
 
-### Added
-### Changed
-### Deprecated
-### Removed
 ### Fixed
   * Correctly decode JWT claims
-### Security
+  * Use correct endpoint for `login()`
 
 ## [1.2.0] -- 2018-01-22
 
