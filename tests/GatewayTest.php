@@ -10,6 +10,11 @@ use Rumbleship\Test\RequestToBodyMockTransport;
 class GatewayTest extends TestCase {
     const HOST = 'api.staging-rumbleship.com';
 
+    // required for testing overriding Api->login()
+    const TEST_ID_TOKEN= 'api123key';
+    const TEST_EMAIL= 'lockwood+test@rumbleship.com';
+    const JWT = 'my.test.jwt';
+
     function setUp()
     {
         $claims = array(
@@ -199,5 +204,44 @@ class GatewayTest extends TestCase {
         $url_expected = "https://" . self::HOST . "/v1/config?id_token=$token";
         $this->assertEquals($resp->body['url'], $url_expected);
         $this->assertEquals($resp->body['options']['type'], 'GET');
+    }
+
+    /**
+     * Gateway Login posts to correct endpoint
+     */
+    function testGatewayLogin()
+    {
+        $transport = new RequestToBodyMockTransport();
+        $gateway = new Gateway(self::HOST, array('transport' => $transport));
+        $credentials = array(
+            'id_token' => 'mylongidtokenasdfasdfasdf',
+            'email' => 'test@rumbleship.com'
+        );
+        $context = 'test-gateway';
+        $resp = $gateway->login($credentials, $context);
+        $url_expected = "https://" . self::HOST . "/v1/gateway/login";
+        $this->assertEquals($resp->body['url'], $url_expected);
+        $this->assertEquals($resp->body['options']['type'], 'POST');
+        $this->assertEquals($resp->body['request_payload']['id_token'], $credentials['id_token']);
+        $this->assertEquals($resp->body['request_payload']['email'], $credentials['email']);
+    }
+
+    /**
+     * Gateway Login with credentials should set the $jwt
+     */
+    function testGatewayLoginSetsJWT()
+    {
+        // setup our mock response
+        $transport = new MockTransport();
+        $jwt = 'mock.jsonwebtoken.aasdf';
+        $transport->raw_headers =  'authorization: ' . $jwt ."\r\n";
+        $transport->code = 201;
+        $gateway = new Gateway(self::HOST, array('transport' => $transport));
+        $data = array('id_token' => self::TEST_ID_TOKEN, 'email' => self::TEST_EMAIL);
+        $context = 'test-gateway';
+        // test the request
+        $resp = $gateway->login($data, $context);
+        $this->assertEquals($resp->status_code, 201);
+        $this->assertEquals($gateway->getJwt(), $jwt);
     }
 }
