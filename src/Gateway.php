@@ -15,6 +15,16 @@ class Gateway extends Api {
         $this->description = 'Endpoint SDK for using the gateway';
     }
 
+    public function login($credentials) {
+        if (!is_array($credentials)) {
+            throw new Exception('Login requires first (and only) param to be an Associative Array');
+        }
+
+        $resp = $this->post('v1/gateway/login', $credentials);
+        $jwt = $resp->headers['authorization'];
+        $this->setJwt($jwt);
+        return $resp;
+    }
 
     /**
      * method to let us know we're ready to use it
