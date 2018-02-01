@@ -16,10 +16,11 @@ class Gateway extends Api {
     }
 
     public function login($credentials) {
-        if (!is_array($credentials))
-            throw new Exception('Login requires first param to be an Associative Array');
+        if (!is_array($credentials)) {
+            throw new Exception('Login requires first (and only) param to be an Associative Array');
+        }
 
-        $resp =  $this->post('v1/gateway/login', $credentials);
+        $resp = $this->post('v1/gateway/login', $credentials);
         $jwt = $resp->headers['authorization'];
         $this->setJwt($jwt);
         return $resp;
