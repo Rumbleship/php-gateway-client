@@ -112,6 +112,16 @@ class Api {
         return $resp;
     }
 
+    public function gatewayLogin($credentials, $context) {
+        if (!is_array($credentials))
+            throw new Exception('Login requires first param to be an Associative Array');
+
+        $resp =  $this->post('v1/gateway/login', $credentials);
+        $jwt = $resp->headers['authorization'];
+        $this->setJwt($jwt);
+        return $resp;
+    }
+
     protected function buildUrl($path)
     {
         $p = $this->pathPrefix ? rtrim($this->pathPrefix, '/') . '/' . rtrim($path, '/') : rtrim($path, '/');
