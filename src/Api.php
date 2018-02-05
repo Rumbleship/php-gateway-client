@@ -106,10 +106,7 @@ class Api {
         if (!is_array($credentials))
             throw new Exception('Login requires first param to be an Associative Array');
 
-        $resp =  $this->post('v1/login', $credentials);
-        $jwt = $resp->headers['authorization'];
-        $this->setJwt($jwt);
-        return $resp;
+        return $this->post('v1/login', $credentials);
     }
 
     protected function buildUrl($path)
@@ -120,27 +117,52 @@ class Api {
 
     public function get($path)
     {
-        return Requests::get($this->buildUrl($path), $this->headers, $this->requestOptions);
+        return $this->handleRequest('get', $path);
     }
 
     public function post($path, $data)
     {
-        return Requests::post($this->buildUrl($path), $this->headers, $data, $this->requestOptions);
+        return $this->handleRequest('post', $path, $data);
     }
 
     public function put($path, $data)
     {
-        return Requests::put($this->buildUrl($path), $this->headers, $data, $this->requestOptions);
+        return $this->handleRequest('put', $path, $data);
     }
 
     public function patch($path, $data)
     {
-        return Requests::patch($this->buildUrl($path), $this->headers, $data, $this->requestOptions);
+        return $this->handleRequest('patch', $path, $data);
     }
 
     public function delete($path)
     {
-        return Requests::delete($this->buildUrl($path), $this->headers, $this->requestOptions);
+        return $this->handleRequest('delete', $path);
+    }
+
+    protected function handleRequest($method, $path, $data=[])
+    {
+        $resp;
+        switch($method) {
+            case 'get':
+                $resp = Requests::get($this->buildUrl($path), $this->headers, $this->requestOptions);
+                break;
+            case 'post':
+                $resp = Requests::post($this->buildUrl($path), $this->headers, $data, $this->requestOptions);
+                break;
+            case 'put':
+                $resp = Requests::put($this->buildUrl($path), $this->headers, $data, $this->requestOptions);
+                break;
+            case 'patch':
+                $resp = Requests::patch($this->buildUrl($path), $this->headers, $data, $this->requestOptions);
+                break;
+            case 'delete':
+                $resp = Requests::delete($this->buildUrl($path), $this->headers, $this->requestOptions);
+                break;
+        }
+        $jwt = $resp->headers['authorization'];
+        $this->setJwt($jwt);
+        return $resp;
     }
 
 }
