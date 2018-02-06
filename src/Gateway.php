@@ -50,6 +50,26 @@ class Gateway extends Api {
     }
 
     /**
+    * method to return private representation of a buyer profile
+    * @return object
+    */
+    public function getBuyerProfile()
+    {
+        $b = $this->requireBuyer();
+        return $this->get("v1/buyers/$b");
+    }
+
+    /**
+    * method to return private representation of a supplier profile
+    * @return object
+    */
+    public function getSupplierProfile()
+    {
+      $s = $this->requireSupplier();
+      return $this->get("v1/suppliers/$s");
+    }
+
+    /**
      *  Get a buyer supplier relationship based on authorized buyer supplier
      *  @return array
      */
