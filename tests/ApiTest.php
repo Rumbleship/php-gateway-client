@@ -147,6 +147,21 @@ class ApiTest extends TestCase {
         $this->assertEquals($resp->body['options']['type'], 'POST');
     }
 
+    function testPostUpdatesJwt()
+    {
+        $transport = new MockTransport();
+        $jwt = 'mock.jsonwebtoken.aasdf';
+        $transport->raw_headers =  'authorization: ' . $jwt ."\r\n";
+        $transport->code = 201;
+        $api = new Api(self::HOST, array('transport' => $transport));
+        $data = array();
+        // test the request
+        $resp = $api->post('/test', $data);
+        $this->assertEquals($resp->status_code, 201);
+        $this->assertEquals($api->getJwt(), $jwt);
+    }
+
+
     function testPutIsPut()
     {
         // setup
@@ -159,6 +174,20 @@ class ApiTest extends TestCase {
         $this->assertTrue($resp instanceof \Requests_Response);
         $this->assertEquals($resp->body['request_payload']['key'], $request_data['key']);
         $this->assertEquals($resp->body['options']['type'], 'PUT');
+    }
+
+    function testPutUpdatesJwt()
+    {
+        $transport = new MockTransport();
+        $jwt = 'mock.jsonwebtoken.aasdf';
+        $transport->raw_headers =  'authorization: ' . $jwt ."\r\n";
+        $transport->code = 201;
+        $api = new Api(self::HOST, array('transport' => $transport));
+        $data = array();
+        // test the request
+        $resp = $api->put('/test', $data);
+        $this->assertEquals($resp->status_code, 201);
+        $this->assertEquals($api->getJwt(), $jwt);
     }
 
     function testPatchIsPatch()
@@ -175,6 +204,20 @@ class ApiTest extends TestCase {
         $this->assertEquals($resp->body['options']['type'], 'PATCH');
     }
 
+    function testPatchUpdatesJwt()
+    {
+        $transport = new MockTransport();
+        $jwt = 'mock.jsonwebtoken.aasdf';
+        $transport->raw_headers =  'authorization: ' . $jwt ."\r\n";
+        $transport->code = 201;
+        $api = new Api(self::HOST, array('transport' => $transport));
+        $data = array();
+        // test the request
+        $resp = $api->patch('/test', $data);
+        $this->assertEquals($resp->status_code, 201);
+        $this->assertEquals($api->getJwt(), $jwt);
+    }
+
     function testGetIsGet()
     {
         // setup
@@ -187,6 +230,20 @@ class ApiTest extends TestCase {
         $this->assertEquals($resp->body['options']['type'], 'GET');
     }
 
+    function testGetUpdatesJwt()
+    {
+        $transport = new MockTransport();
+        $jwt = 'mock.jsonwebtoken.aasdf';
+        $transport->raw_headers =  'authorization: ' . $jwt ."\r\n";
+        $transport->code = 201;
+        $api = new Api(self::HOST, array('transport' => $transport));
+        $data = array();
+        // test the request
+        $resp = $api->get('/test', $data);
+        $this->assertEquals($resp->status_code, 201);
+        $this->assertEquals($api->getJwt(), $jwt);
+    }
+
     function testDeleteIsDelete()
     {
         // setup
@@ -197,5 +254,19 @@ class ApiTest extends TestCase {
         $resp = $api->delete('/');
         $this->assertTrue($resp instanceof \Requests_Response);
         $this->assertEquals($resp->body['options']['type'], 'DELETE');
+    }
+
+    function testDeleteUpdatesJwt()
+    {
+        $transport = new MockTransport();
+        $jwt = 'mock.jsonwebtoken.aasdf';
+        $transport->raw_headers =  'authorization: ' . $jwt ."\r\n";
+        $transport->code = 201;
+        $api = new Api(self::HOST, array('transport' => $transport));
+        $data = array();
+        // test the request
+        $resp = $api->delete('/test', $data);
+        $this->assertEquals($resp->status_code, 201);
+        $this->assertEquals($api->getJwt(), $jwt);
     }
 }
