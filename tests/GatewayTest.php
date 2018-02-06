@@ -188,6 +188,47 @@ class GatewayTest extends TestCase {
     }
 
     /**
+     * @group gateway
+     * request has authorization
+     * is GET
+     * is to the correct url
+     */
+    function testGetBuyerProfile()
+    {
+        $transport = new RequestToBodyMockTransport();
+        $gateway = new Gateway(self::HOST, array('transport' => $transport));
+        $gateway->setJwt($this->jwt);
+        $resp = $gateway->getBuyerProfile();
+        $authorized_with_token = $resp->body['headers']['Authorization'];
+        $this->assertEquals($authorized_with_token, $this->jwt);
+        $b = $this->claims['b'];
+        $url_expected = "https://" . self::HOST . "/v1/buyers/$b";
+        $this->assertEquals($resp->body['url'], $url_expected);
+        $this->assertEquals($resp->body['options']['type'], 'GET');
+    }
+
+    /**
+     * @group gateway
+     * request has authorization
+     * is GET
+     * is to the correct url
+     */
+    function testGetSupplierProfile()
+    {
+        $transport = new RequestToBodyMockTransport();
+        $gateway = new Gateway(self::HOST, array('transport' => $transport));
+        $gateway->setJwt($this->jwt);
+        $resp = $gateway->getSupplierProfile();
+        $authorized_with_token = $resp->body['headers']['Authorization'];
+        $this->assertEquals($authorized_with_token, $this->jwt);
+        $s = $this->claims['s'];
+        $url_expected = "https://" . self::HOST . "/v1/suppliers/$s";
+        $this->assertEquals($resp->body['url'], $url_expected);
+        $this->assertEquals($resp->body['options']['type'], 'GET');
+    }
+
+
+    /**
     * @group current
     */
     function testGetConfig()
