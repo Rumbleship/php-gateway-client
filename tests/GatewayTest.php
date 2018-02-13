@@ -10,13 +10,12 @@ use Rumbleship\Test\RequestToBodyMockTransport;
 class GatewayTest extends TestCase {
     const HOST = 'api.staging-rumbleship.com';
 
-    function setUp()
-    {
-        $claims = array(
+    public function setUp() {
+        $claims = [
             'u'=> 'userhashid',
             'b' => 'buyerhashid',
             's' => 'supplierhashid'
-        );
+        ];
         $this->jwt = $this->claimsToJwt($claims);
         $this->claims = $claims;
     }
@@ -32,11 +31,11 @@ class GatewayTest extends TestCase {
      * Test that the ready() method returns ready if there is a jwt,
      * and authorized supplier and buyer
      */
-    function testReady() {
+    public function testReady() {
         $transport = new RequestToBodyMockTransport();
-        $gateway = new Gateway(self::HOST, array('transport' => $transport));
+        $gateway = new Gateway(self::HOST, ['transport' => $transport]);
         $this->assertFalse($gateway->ready());
-        $insufficient_claims = array('u'=> 'asdf');
+        $insufficient_claims = ['u'=> 'asdf'];
         $gateway->setJwt($this->claimsToJwt($insufficient_claims));
         $this->assertFalse($gateway->ready());
         $gateway->setJwt($this->jwt);
@@ -49,10 +48,9 @@ class GatewayTest extends TestCase {
      * is GET
      * is to the correct url
      */
-    function testGetTermsChoices()
-    {
+    public function testGetTermsChoices() {
         $transport = new RequestToBodyMockTransport();
-        $gateway = new Gateway(self::HOST, array('transport' => $transport));
+        $gateway = new Gateway(self::HOST, ['transport' => $transport]);
         $gateway->setJwt($this->jwt);
         $resp = $gateway->getTermsChoices();
         $authorized_with_token = $resp->body['headers']['Authorization'];
@@ -71,12 +69,11 @@ class GatewayTest extends TestCase {
      * is to the correct url
      * posts the data in the request body
      */
-    function testCreatePurchaseOrder()
-    {
+    public function testCreatePurchaseOrder() {
         $transport = new RequestToBodyMockTransport();
-        $gateway = new Gateway(self::HOST, array('transport' => $transport));
+        $gateway = new Gateway(self::HOST, ['transport' => $transport]);
         $gateway->setJwt($this->jwt);
-        $data = array( 'key' => 'createPoData' );
+        $data = [ 'key' => 'createPoData' ];
         $resp = $gateway->createPurchaseOrder($data);
         $authorized_with_token = $resp->body['headers']['Authorization'];
         $this->assertEquals($authorized_with_token, $this->jwt);
@@ -96,12 +93,11 @@ class GatewayTest extends TestCase {
      * uses the passed in hashid
      * posts the data in the request body
      */
-    function testConfirmPurchaseOrder()
-    {
+    public function testConfirmPurchaseOrder() {
         $transport = new RequestToBodyMockTransport();
-        $gateway = new Gateway(self::HOST, array('transport' => $transport));
+        $gateway = new Gateway(self::HOST, ['transport' => $transport]);
         $gateway->setJwt($this->jwt);
-        $data = array('key' => 'confirmPoData');
+        $data = ['key' => 'confirmPoData'];
         $hashid = 'po_test';
         $resp = $gateway->confirmPurchaseOrder($hashid, $data);
         $authorized_with_token = $resp->body['headers']['Authorization'];
@@ -122,12 +118,11 @@ class GatewayTest extends TestCase {
      * uses the passed in hashid
      * posts the data in the request body
      */
-    function testConfirmForShipment()
-    {
+    public function testConfirmForShipment() {
         $transport = new RequestToBodyMockTransport();
-        $gateway = new Gateway(self::HOST, array('transport' => $transport));
+        $gateway = new Gateway(self::HOST, ['transport' => $transport]);
         $gateway->setJwt($this->jwt);
-        $data = array('key' => 'confirmPoData');
+        $data = ['key' => 'confirmPoData'];
         $hashid = 'po_test';
         $resp = $gateway->confirmForShipment($hashid, $data);
         $authorized_with_token = $resp->body['headers']['Authorization'];
@@ -148,14 +143,13 @@ class GatewayTest extends TestCase {
      * uses the passed in hashid
      * posts the data in the request body
      */
-    function testCreateShipment()
-    {
+    public function testCreateShipment() {
         $transport = new RequestToBodyMockTransport();
-        $gateway = new Gateway(self::HOST, array('transport' => $transport));
+        $gateway = new Gateway(self::HOST, ['transport' => $transport]);
         $gateway->setJwt($this->jwt);
-        $data = array('key' => 'createShipment');
+        $data = ['key' => 'createShipment'];
         $hashid = 'po_test';
-        $resp = $gateway->createShipment( $hashid, $data );
+        $resp = $gateway->createShipment($hashid, $data);
         $authorized_with_token = $resp->body['headers']['Authorization'];
         $this->assertEquals($authorized_with_token, $this->jwt);
         $b = $this->claims['b'];
@@ -172,10 +166,9 @@ class GatewayTest extends TestCase {
      * is GET
      * is to the correct url
      */
-    function testGetBuyerSupplierRelationhip()
-    {
+    public function testGetBuyerSupplierRelationhip() {
         $transport = new RequestToBodyMockTransport();
-        $gateway = new Gateway(self::HOST, array('transport' => $transport));
+        $gateway = new Gateway(self::HOST, ['transport' => $transport]);
         $gateway->setJwt($this->jwt);
         $resp = $gateway->getBuyerSupplierRelationship();
         $authorized_with_token = $resp->body['headers']['Authorization'];
@@ -193,10 +186,9 @@ class GatewayTest extends TestCase {
      * is GET
      * is to the correct url
      */
-    function testGetBuyerProfile()
-    {
+    public function testGetBuyerProfile() {
         $transport = new RequestToBodyMockTransport();
-        $gateway = new Gateway(self::HOST, array('transport' => $transport));
+        $gateway = new Gateway(self::HOST, ['transport' => $transport]);
         $gateway->setJwt($this->jwt);
         $resp = $gateway->getBuyerProfile();
         $authorized_with_token = $resp->body['headers']['Authorization'];
@@ -213,10 +205,9 @@ class GatewayTest extends TestCase {
      * is GET
      * is to the correct url
      */
-    function testGetSupplierProfile()
-    {
+    public function testGetSupplierProfile() {
         $transport = new RequestToBodyMockTransport();
-        $gateway = new Gateway(self::HOST, array('transport' => $transport));
+        $gateway = new Gateway(self::HOST, ['transport' => $transport]);
         $gateway->setJwt($this->jwt);
         $resp = $gateway->getSupplierProfile();
         $authorized_with_token = $resp->body['headers']['Authorization'];
@@ -231,10 +222,9 @@ class GatewayTest extends TestCase {
     /**
     * @group current
     */
-    function testGetConfig()
-    {
+    public function testGetConfig() {
         $transport = new RequestToBodyMockTransport();
-        $gateway = new Gateway(self::HOST, array('transport' => $transport));
+        $gateway = new Gateway(self::HOST, ['transport' => $transport]);
         $token = "secrettoken";
         $resp = $gateway->getConfig($token);
         $url_expected = "https://" . self::HOST . "/v1/config?id_token=$token";
@@ -245,15 +235,14 @@ class GatewayTest extends TestCase {
     /**
      * Gateway Login posts to correct endpoint
      */
-    function testGatewayLogin()
-    {
+    public function testGatewayLogin() {
         $transport = new RequestToBodyMockTransport();
-        $gateway = new Gateway(self::HOST, array('transport' => $transport));
-        $credentials = array(
+        $gateway = new Gateway(self::HOST, ['transport' => $transport]);
+        $credentials = [
             'id_token' => 'mylongidtokenasdfasdfasdf',
             'email' => 'test@rumbleship.com',
             'context' => 'test-gateway',
-        );
+        ];
         $context = 'test-gateway';
         $resp = $gateway->login($credentials);
         $url_expected = "https://" . self::HOST . "/v1/gateway/login";
@@ -266,15 +255,14 @@ class GatewayTest extends TestCase {
     /**
      * Gateway Login with credentials should set the $jwt
      */
-    function testGatewayLoginSetsJWT()
-    {
+    public function testGatewayLoginSetsJWT() {
         // setup our mock response
         $transport = new MockTransport();
         $jwt = 'mock.jsonwebtoken.aasdf';
         $transport->raw_headers =  'authorization: ' . $jwt ."\r\n";
         $transport->code = 201;
-        $gateway = new Gateway(self::HOST, array('transport' => $transport));
-        $data = array('id_token' => 'api123key', 'email' => 'test@rumbleship.co');
+        $gateway = new Gateway(self::HOST, ['transport' => $transport]);
+        $data = ['id_token' => 'api123key', 'email' => 'test@rumbleship.co'];
         // test the request
         $resp = $gateway->login($data);
         $this->assertEquals($resp->status_code, 201);

@@ -4,12 +4,10 @@ namespace Rumbleship;
 use Rumbleship\Api;
 use Exception;
 
-
 class Gateway extends Api {
     protected $name;
 
-    public function __construct ( $host, $request_options = array())
-    {
+    public function __construct($host, $request_options = []) {
         parent::__construct($host, $request_options);
         $this->name = 'Rumbleship Gateway';
         $this->description = 'Endpoint SDK for using the gateway';
@@ -33,8 +31,7 @@ class Gateway extends Api {
      *
      * @return boolean
      */
-    public function ready()
-    {
+    public function ready() {
         return ($this->authorizedSupplier && $this->authorizedBuyer && $this->jwt);
     }
 
@@ -42,10 +39,10 @@ class Gateway extends Api {
      * method to return data for front end analytics configuration
      * @return array
     */
-    public function getConfig($token)
-    {
-        if( ! $token )
+    public function getConfig($token) {
+        if (! $token) {
             throw new Exception('$token parameter is required');
+        }
         return $this->get("v1/config?id_token=$token");
     }
 
@@ -53,8 +50,7 @@ class Gateway extends Api {
     * method to return private representation of a buyer profile
     * @return object
     */
-    public function getBuyerProfile()
-    {
+    public function getBuyerProfile() {
         $b = $this->requireBuyer();
         return $this->get("v1/buyers/$b");
     }
@@ -63,18 +59,16 @@ class Gateway extends Api {
     * method to return private representation of a supplier profile
     * @return object
     */
-    public function getSupplierProfile()
-    {
-      $s = $this->requireSupplier();
-      return $this->get("v1/suppliers/$s");
+    public function getSupplierProfile() {
+        $s = $this->requireSupplier();
+        return $this->get("v1/suppliers/$s");
     }
 
     /**
      *  Get a buyer supplier relationship based on authorized buyer supplier
      *  @return array
      */
-    public function getBuyerSupplierRelationship()
-    {
+    public function getBuyerSupplierRelationship() {
         $b = $this->requireBuyer();
         $s = $this->requireSupplier();
         return $this->get("v1/buyers/$b/suppliers/$s");
@@ -83,8 +77,7 @@ class Gateway extends Api {
     /**
      * Get terms choices
      */
-    public function getTermsChoices()
-    {
+    public function getTermsChoices() {
         $b = $this->requireBuyer();
         $s = $this->requireSupplier();
         return $this->get("v1/buyers/$b/suppliers/$s/terms-choices");
@@ -93,8 +86,7 @@ class Gateway extends Api {
     /**
      * Create the initial purchase order
      */
-    public function createPurchaseOrder($data)
-    {
+    public function createPurchaseOrder($data) {
         $b = $this->requireBuyer();
         $s = $this->requireSupplier();
         return $this->post("v1/buyers/$b/suppliers/$s/purchase-orders", $data);
@@ -104,8 +96,7 @@ class Gateway extends Api {
      * Confirm the checkout/payment agreement of a purchase order
      * and create a shipment containing all line items
      */
-    public function confirmPurchaseOrder($hashid, $data)
-    {
+    public function confirmPurchaseOrder($hashid, $data) {
         return $this->post("v1/purchase-orders/$hashid/confirm", $data);
     }
 
@@ -113,8 +104,7 @@ class Gateway extends Api {
      * Confirm the checkout/payment agreement of a purchase order
      * and do not create a shipment
      */
-    public function confirmForShipment($hashid, $data)
-    {
+    public function confirmForShipment($hashid, $data) {
         return $this->post("v1/purchase-orders/$hashid/confirm-for-shipment", $data);
     }
 
@@ -122,24 +112,21 @@ class Gateway extends Api {
      * Create the initial shipment
      */
     public function createShipment($hashid, $data) {
-      return $this->post("v1/purchase-orders/$hashid/shipments", $data);
+        return $this->post("v1/purchase-orders/$hashid/shipments", $data);
     }
 
-    private function requireSupplier()
-    {
-        if ( $this->authorizedSupplier )
+    private function requireSupplier() {
+        if ($this->authorizedSupplier) {
             return $this->authorizedSupplier;
-        else
+        } else {
             throw new Exception('Authorized Supplier is required');
-
+        }
     }
-    private function requireBuyer()
-    {
-        if ( $this->authorizedBuyer )
+    private function requireBuyer() {
+        if ($this->authorizedBuyer) {
             return $this->authorizedBuyer;
-        else
+        } else {
             throw new Exception('Authorized Buyer is required');
-
+        }
     }
-
 }

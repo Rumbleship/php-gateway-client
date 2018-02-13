@@ -32,3 +32,7 @@ Now with composer installed you can run composer commands such as:
 Composer is setup to [generate an autoload file](https://getcomposer.org/doc/01-basic-usage.md#autoloading)
 
     composer dump-autoload
+
+## Formatting
+
+This project uses [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) to standardize and enforce formatting. While this process will eventually be automated, *it presently needs to be done manually*: prior to committing, run `composer format`

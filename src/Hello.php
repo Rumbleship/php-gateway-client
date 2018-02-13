@@ -10,5 +10,4 @@ class Hello {
     public function words() {
         return 'Hello ' . $this->name . '.';
     }
-
 }
