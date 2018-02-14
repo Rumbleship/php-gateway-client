@@ -4,10 +4,10 @@
     "type": "library",
     "license": "GPL-3.0",
     "authors": [
-        {
-            "name": "Alex Lockwood",
-            "email": "alex.lockwood@gmail.com"
-        }
+      {
+          "name": "Alex Lockwood",
+          "email": "alex.lockwood@gmail.com"
+      }
     ],
     "scripts": {
       "test": "phpunit --bootstrap vendor/autoload.php tests",
@@ -17,15 +17,15 @@
       "rmccue/requests": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.7",
-        "friendsofphp/php-cs-fixer": "^2.10"
+      "phpunit/phpunit": "^5.7",
+      "friendsofphp/php-cs-fixer": "^2.10"
     },
     "minimum-stability": "beta",
     "prefer-stable": true,
     "autoload": {
-        "psr-4": {
-          "Rumbleship\\": "src/" ,
-          "Rumbleship\\Test\\": "tests/"
-        }
+      "psr-4": {
+        "Rumbleship\\": "src/" ,
+        "Rumbleship\\Test\\": "tests/"
+      }
     }
 }
