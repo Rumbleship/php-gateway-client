@@ -33,4 +33,5 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
 
       # run tests!
+      - run: composer format
       - run: composer test
