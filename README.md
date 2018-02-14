@@ -39,3 +39,24 @@ This project uses [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) t
 ```shell
 $ composer format
 ```
+
+## Deployment
+
+* Branch from `dev` with `release/{VERSION}`
+* Ensure top section in `CHANGELOG.md` is titled `[{VERSION}] -- {DATE}` (no stubs above) and has appropriate entries
+* Draft release in GitHub UI with matching version tag
+* PR into `master` with `[{VERSION}] -- {DATE}` as title and changelog entries as comment
+* Merge PR, delete branch
+* Publish release
+* Merge `master` into `dev`, update `dev` with changelog stubs:
+```
+## [Unreleased] -- YYYY-MM-DD
+
+### Added
+  * Entry
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+```
