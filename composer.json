@@ -5,8 +5,8 @@
     "license": "GPL-3.0",
     "authors": [
       {
-          "name": "Alex Lockwood",
-          "email": "alex.lockwood@gmail.com"
+        "name": "Alex Lockwood",
+        "email": "alex.lockwood@gmail.com"
       }
     ],
     "scripts": {
