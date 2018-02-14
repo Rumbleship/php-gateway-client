@@ -11,7 +11,7 @@
     ],
     "scripts": {
       "test": "phpunit --bootstrap vendor/autoload.php tests",
-      "format": "php vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix ../"
+      "format": "php vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix ./"
     },
     "require": {
       "rmccue/requests": "^1.0"
