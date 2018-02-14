@@ -35,4 +35,4 @@ Composer is setup to [generate an autoload file](https://getcomposer.org/doc/01-
 
 ## Formatting
 
-This project uses [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) to standardize and enforce formatting. This process is automated on our CI system but *presently needs to be performed manually in local environments*: prior to committing, run `composer format`
+This project uses [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) to standardize and enforce formatting. This process is automated on our CI system but **presently needs to be performed manually in local environments**: prior to committing, run `composer format`
