@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/php:7.1
+      - image: circleci/php:5.6
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -25,7 +25,8 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: composer install -n --prefer-dist
+      # --ignore-platform-reqs: install on 5.6 despite php-cs-fixer's 7+ req
+      - run: composer install --no-interaction --prefer-dist --ignore-platform-reqs
 
       - save_cache:
           paths:
@@ -33,5 +34,4 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
 
       # run tests!
-      - run: composer format
       - run: composer test
