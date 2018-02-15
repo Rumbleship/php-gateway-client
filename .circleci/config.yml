@@ -25,7 +25,8 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: composer install -n --prefer-dist
+      # --ignore-platform-reqs: install on 5.6 despite php-cs-fixer's 7+ req
+      - run: composer install --no-interaction --prefer-dist --ignore-platform-reqs
 
       - save_cache:
           paths:

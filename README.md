@@ -32,3 +32,31 @@ Now with composer installed you can run composer commands such as:
 Composer is setup to [generate an autoload file](https://getcomposer.org/doc/01-basic-usage.md#autoloading)
 
     composer dump-autoload
+
+## Formatting
+
+This project uses [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) to standardize and enforce formatting. This process is automated on our CI system but **presently needs to be performed manually in local environments**: prior to committing, run
+```shell
+$ composer format
+```
+
+## Deployment
+
+* Branch from `dev` with `release/{VERSION}`
+* Ensure top section in `CHANGELOG.md` is titled `[{VERSION}] -- {DATE}` (no stubs above) and has appropriate entries
+* Draft release in GitHub UI with matching version tag
+* PR into `master` with `[{VERSION}] -- {DATE}` as title and changelog entries as comment
+* Merge PR, delete branch
+* Publish release
+* Merge `master` into `dev`, update `dev` with changelog stubs:
+```
+## [Unreleased] -- YYYY-MM-DD
+
+### Added
+  * Entry
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+```

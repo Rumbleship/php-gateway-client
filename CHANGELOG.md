@@ -4,15 +4,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [Unreleased] -- 2018-MM-DD
 
 ### Added
-  * login() defined on Gateway to allow retrieval of API-defined copy
+  * `composer format` command for standardized formatting (uses `php-cs-fixer`)
 ### Changed
 ### Deprecated
 ### Removed
 ### Fixed
 ### Security
+
+## [1.4.0]
+
+### Added
+  * login() defined on Gateway to allow retrieval of API-defined copy
+  * all request methods now update the jwt with response
+  * Gateway getBuyerProfile()
+  * Gateway getSupplierProfile()
+
+### Changed
+  * login() on Gateway now uses v1/gateway/login, returns api defined copy
 
 ## [1.3.0] -- 2018-01-31
 

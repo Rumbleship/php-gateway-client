@@ -8,5 +8,3 @@ class HelloTest extends TestCase {
         $this->assertEquals('Hello Alex.', $hello->words());
     }
 }
-
-?>
